@@ -1,8 +1,6 @@
-from typing import Optional
+from fastapi import FastAPI
 
-from black import List
-from fastapi import FastAPI, Path, Query
-from pydantic import BaseModel
+from api import courses, sections, users
 
 app = FastAPI(
     title="FastAPI LMS",
@@ -17,29 +15,6 @@ app = FastAPI(
     license_info={"name": "MIT"},
 )
 
-users = []
-
-
-class UserSchema(BaseModel):
-    email: str
-    is_active: bool
-    bio: Optional[str]
-
-
-@app.get("/users", response_model=List[UserSchema])
-async def get_users():
-    return users
-
-
-@app.post("/users")
-async def create_users(user: UserSchema):
-    users.append(user)
-    return user
-
-
-@app.get("/users/{user_id}")
-async def get_user_by_id(
-    user_id: int = Path(..., description="Id for the USER", lt=3, gt=0),
-    q: str = Query(None, max_length=5),
-):
-    return {"user": users[user_id], "query": q}
+app.include_router(users.router)
+app.include_router(sections.router)
+app.include_router(courses.router)
