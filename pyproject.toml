@@ -2,13 +2,16 @@
 name = "fast-api-lms"
 version = "0.1.0"
 description = ""
-authors = ["shaikmalikbasha <shaikmalikbasha1998@gmail.com>"]
+authors = ["shaikmalikbasha <shaikmalikbasha@example.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
 fastapi = "^0.75.2"
 uvicorn = "^0.17.6"
 pydantic = "^1.9.0"
+SQLAlchemy = "^1.4.35"
+psycopg2-binary = "^2.9.3"
+SQLAlchemy-Utils = "^0.38.2"
 
 [tool.poetry.dev-dependencies]
 black = {version = "^22.3.0", allow-prereleases = true}
