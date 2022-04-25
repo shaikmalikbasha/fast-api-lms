@@ -14,9 +14,10 @@ class Role(enum.Enum):
 class User(Timestamp, Base):
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True, autoincrement=True, index=True)
-    email = Column(String, nullable=False, unique=True)
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String(100), unique=True, index=True, nullable=False)
     role = Column(Enum(Role))
+    is_active = Column(Boolean, default=True)
 
     profile = relationship("Profile", back_populates="owner", uselist=False)
 
@@ -24,11 +25,10 @@ class User(Timestamp, Base):
 class Profile(Timestamp, Base):
     __tablename__ = "profiles"
 
-    id = Column(Integer, primary_key=True, autoincrement=True, index=True)
+    id = Column(Integer, primary_key=True, index=True)
     first_name = Column(String(50), nullable=False)
     last_name = Column(String(50), nullable=False)
-    bio = Column(Text)
-    is_active = Column(Boolean, default=True)
+    bio = Column(Text, nullable=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
 
     owner = relationship("User", back_populates="profile")
